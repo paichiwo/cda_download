@@ -3,6 +3,7 @@ import urllib.request
 from bs4 import BeautifulSoup
 from selenium import webdriver
 from pycda.config import USER_AGENT, QUALITIES
+from pycda.helpers import format_date_string
 
 
 class PyCDA:
@@ -35,6 +36,13 @@ class PyCDA:
             return title
         else:
             raise Exception('Title could not be fetched')
+
+    def publish_date(self) -> str:
+        date = self.__soup.find('meta', {'itemprop': 'uploadDate'}).get('content')
+        if date:
+            return format_date_string(date)
+        else:
+            raise Exception('Publish date could not be fetched')
 
     def __get_video_src(self, quality):
         soup = self.__get_soup(self.__url + self.__quality_urls[quality])
