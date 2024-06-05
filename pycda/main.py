@@ -21,6 +21,13 @@ class PyCDA:
         if self.__page:
             self.__soup = BeautifulSoup(self.__page, 'html.parser')
 
+    def thumbnail(self) -> str:
+        thumbnail_url = self.__soup.find('meta', {'property': 'og:image'}).get('content')
+        if thumbnail_url:
+            return thumbnail_url
+        else:
+            raise Exception('Thumbnail url could not be fetched')
+
     def title(self) -> str:
         title = self.__soup.find('meta', {'property': 'og:title'}).get('content')
         if title:
@@ -43,7 +50,6 @@ class PyCDA:
     def __find_best_quality(self):
         for quality in self.__qualities:
             target = self.__get_video_src(quality)
-            print(target)
             if target and len(target.split('/')[-1]) > 4:
                 return target
         return None

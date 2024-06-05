@@ -30,4 +30,5 @@ if __name__ == '__main__':
 
     cda = PyCDA(url5)
     # cda.download(on_progress_callback=report_hook)
-    cda.title()
+    # cda.title()
+    print(cda.thumbnail())
