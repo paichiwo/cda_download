@@ -2,23 +2,25 @@ import os
 import urllib.request
 from bs4 import BeautifulSoup
 from selenium import webdriver
-from config import USER_AGENT, QUALITIES
+from pycda.config import USER_AGENT, QUALITIES
+
 
 class PyCDA:
     def __init__(self, url):
         self.__url = url
-
         self.__quality_urls = {q: f'/vfilm?wersja={q}p' for q in QUALITIES}
 
         self.__options = webdriver.ChromeOptions()
         self.__options.add_argument('headless')
         self.__options.add_argument(f'user-agent={USER_AGENT}')
         self.__driver = webdriver.Chrome(options=self.__options)
+        self.__soup = self.__get_soup(url)
 
+    def __get_soup(self, url):
         self.__driver.get(url)
-        self.__page = self.__driver.page_source
-        if self.__page:
-            self.__soup = BeautifulSoup(self.__page, 'html.parser')
+        page_src = self.__driver.page_source
+        self.__driver.quit()
+        return BeautifulSoup(page_src, 'html.parser') if page_src else None
 
     def thumbnail(self) -> str:
         thumbnail_url = self.__soup.find('meta', {'property': 'og:image'}).get('content')
@@ -35,15 +37,11 @@ class PyCDA:
             raise Exception('Title could not be fetched')
 
     def __get_video_src(self, quality):
-        self.__driver.get(self.__url + self.__quality_urls[quality])
-        page = self.__driver.page_source
-
-        if page:
-            soup = BeautifulSoup(page, 'html.parser')
+        soup = self.__get_soup(self.__url + self.__quality_urls[quality])
+        if soup:
             video_tag = soup.find('video', class_='pb-video-player')
             if video_tag:
-                src = video_tag.get('src')
-                return src
+                return video_tag.get('src')
         return None
 
     def __find_best_quality(self):
@@ -64,4 +62,3 @@ class PyCDA:
                 print('File already downloaded')
         else:
             print("No valid video URL found.")
-        self.__driver.quit()
