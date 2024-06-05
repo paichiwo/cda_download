@@ -16,6 +16,18 @@ class PyCDA:
         self.__options.add_argument(f'user-agent={self.__user_agent}')
         self.__driver = webdriver.Chrome(options=self.__options)
 
+        self.__driver.get(url)
+        self.__page = self.__driver.page_source
+        if self.__page:
+            self.__soup = BeautifulSoup(self.__page, 'html.parser')
+
+    def title(self) -> str:
+        title = self.__soup.find('meta', {'property': 'og:title'}).get('content')
+        if title:
+            return title
+        else:
+            raise Exception('Title could not be fetched')
+
     def __get_video_src(self, quality):
         self.__driver.get(self.__url + self.__quality_urls[quality])
         page = self.__driver.page_source

@@ -26,6 +26,8 @@ if __name__ == '__main__':
     url2 = 'https://www.cda.pl/video/192935076e'
     url3 = 'https://www.cda.pl/video/295066274'
     url4 = 'https://www.cda.pl/video/210880265'
+    url5 = 'https://www.cda.pl/video/1252604482'
 
-    cda = PyCDA(url4)
+    cda = PyCDA(url5)
     # cda.download(on_progress_callback=report_hook)
+    cda.title()
