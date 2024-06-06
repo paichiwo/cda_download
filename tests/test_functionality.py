@@ -32,4 +32,5 @@ if __name__ == '__main__':
     # cda.download(on_progress_callback=report_hook)
     # cda.title()
     # cda.thumbnail()
-    print(cda.publish_date())
+    # print(cda.publish_date())
+    print(cda.duration())

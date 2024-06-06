@@ -44,6 +44,13 @@ class PyCDA:
         else:
             raise Exception('Publish date could not be fetched')
 
+    def duration(self) -> str:
+        duration = self.__soup.find('meta', {'itemprop': 'duration'}).get('content')
+        if duration:
+            return duration
+        else:
+            raise Exception('Duration could not be fetched')
+
     def __get_video_src(self, quality):
         soup = self.__get_soup(self.__url + self.__quality_urls[quality])
         if soup:
