@@ -3,7 +3,7 @@ import urllib.request
 from bs4 import BeautifulSoup
 from selenium import webdriver
 from pycda.config import USER_AGENT, QUALITIES
-from pycda.helpers import format_date_string
+from pycda.helpers import format_date_string, format_duration
 
 
 class PyCDA:
@@ -47,7 +47,7 @@ class PyCDA:
     def duration(self) -> str:
         duration = self.__soup.find('meta', {'itemprop': 'duration'}).get('content')
         if duration:
-            return duration
+            return format_duration(duration)
         else:
             raise Exception('Duration could not be fetched')
 
