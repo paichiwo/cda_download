@@ -7,7 +7,9 @@ from pycda.helpers import format_date_string, format_duration
 
 
 class PyCDA:
-    def __init__(self, url):
+    """Lightweight CDA wrapper"""
+
+    def __init__(self, url: str):
         self.__url = url
         self.__qualities = ['1080', '720', '480', '360']
         self.__quality_urls = {q: f'/vfilm?wersja={q}p' for q in self.__qualities}
@@ -19,7 +21,7 @@ class PyCDA:
         self.__driver = webdriver.Chrome(options=self.__options)
         self.__soup = self.__get_soup(url)
 
-    def __get_soup(self, url):
+    def __get_soup(self, url: str) -> BeautifulSoup:
         self.__driver.get(url)
         page_src = self.__driver.page_source
         return BeautifulSoup(page_src, 'html.parser') if page_src else None
@@ -61,7 +63,7 @@ class PyCDA:
         else:
             raise Exception('Filesize could not be fetched')
 
-    def __get_video_src(self, quality):
+    def __get_video_src(self, quality: str) -> str:
         soup = self.__get_soup(self.__url + self.__quality_urls[quality])
         if soup:
             video_tag = soup.find('video', class_='pb-video-player')
@@ -76,7 +78,7 @@ class PyCDA:
                 return target
         return None
 
-    def download(self, filename=None, on_progress_callback=None):
+    def download(self, filename: str = None, on_progress_callback=None):
         target = self.__find_best_quality()
         if target:
             output_filename = f'{filename if filename else self.title()}.mp4'
