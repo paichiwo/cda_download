@@ -79,10 +79,10 @@ class PyCDA:
     def download(self, filename=None, on_progress_callback=None):
         target = self.__find_best_quality()
         if target:
-            print(f"Found video URL: {target}")
-            if not os.path.exists(filename):
+            output_filename = f'{filename if filename else self.title()}.mp4'
+            if not os.path.exists(output_filename):
                 print('Downloading...')
-                urllib.request.urlretrieve(target, filename, reporthook=on_progress_callback)
+                urllib.request.urlretrieve(target, output_filename, reporthook=on_progress_callback)
             else:
                 print('File already downloaded')
         else:
