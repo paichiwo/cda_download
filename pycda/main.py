@@ -2,18 +2,20 @@ import os
 import urllib.request
 from bs4 import BeautifulSoup
 from selenium import webdriver
-from pycda.config import USER_AGENT, QUALITIES
+from fake_useragent import UserAgent
 from pycda.helpers import format_date_string, format_duration
 
 
 class PyCDA:
     def __init__(self, url):
         self.__url = url
-        self.__quality_urls = {q: f'/vfilm?wersja={q}p' for q in QUALITIES}
+        self.__qualities = ['1080', '720', '480', '360']
+        self.__quality_urls = {q: f'/vfilm?wersja={q}p' for q in self.__qualities}
 
         self.__options = webdriver.ChromeOptions()
         self.__options.add_argument('headless')
-        self.__options.add_argument(f'user-agent={USER_AGENT}')
+        self.__options.add_argument(f'user-agent={UserAgent().random}')
+
         self.__driver = webdriver.Chrome(options=self.__options)
         self.__soup = self.__get_soup(url)
 
@@ -68,7 +70,7 @@ class PyCDA:
         return None
 
     def __find_best_quality(self):
-        for quality in QUALITIES:
+        for quality in self.__qualities:
             target = self.__get_video_src(quality)
             if target and len(target.split('/')[-1]) > 4:
                 return target
