@@ -1,5 +1,5 @@
 [project]
-name = "pycda"
+name = "cda_download"
 version = "0.0.1"
 authors = [
   { name="Lukasz Zerucha", email="lzerucha@gmail.com" },
@@ -19,8 +19,8 @@ dependencies = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/paichiwo/pycda"
-Issues = "https://github.com/paichiwo/pycda/issues"
+Homepage = "https://github.com/paichiwo/cda_download"
+Issues = "https://github.com/paichiwo/cda_download/issues"
 
 [build-system]
 requires = [
