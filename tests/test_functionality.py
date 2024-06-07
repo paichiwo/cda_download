@@ -28,9 +28,10 @@ if __name__ == '__main__':
     url4 = 'https://www.cda.pl/video/210880265'
     url5 = 'https://www.cda.pl/video/1252604482'
 
-    cda = PyCDA(url5)
-    # cda.download(on_progress_callback=report_hook)
+    cda = PyCDA(url4)
+    # cda.download(filename='../downloads/cda_file.mp4', on_progress_callback=report_hook)
     # cda.title()
     # cda.thumbnail()
     # print(cda.publish_date())
-    print(cda.duration())
+    # print(cda.duration())
+    print(cda.filesize())

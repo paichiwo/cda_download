@@ -20,7 +20,6 @@ class PyCDA:
     def __get_soup(self, url):
         self.__driver.get(url)
         page_src = self.__driver.page_source
-        self.__driver.quit()
         return BeautifulSoup(page_src, 'html.parser') if page_src else None
 
     def thumbnail(self) -> str:
@@ -51,6 +50,15 @@ class PyCDA:
         else:
             raise Exception('Duration could not be fetched')
 
+    def filesize(self) -> int:
+        target = self.__find_best_quality()
+        if target:
+            request = urllib.request.Request(target, method='HEAD')
+            response = urllib.request.urlopen(request)
+            return int(response.headers.get('Content-Length'))
+        else:
+            raise Exception('Filesize could not be fetched')
+
     def __get_video_src(self, quality):
         soup = self.__get_soup(self.__url + self.__quality_urls[quality])
         if soup:
@@ -66,7 +74,7 @@ class PyCDA:
                 return target
         return None
 
-    def download(self, filename='../downloads/cda_file.mp4', on_progress_callback=None):
+    def download(self, filename=None, on_progress_callback=None):
         target = self.__find_best_quality()
         if target:
             print(f"Found video URL: {target}")
