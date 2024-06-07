@@ -8,7 +8,7 @@ setup(
     name='cda_download',
     version='0.0.1',
     packages=setuptools.find_packages(),
-    url='http://github.com/paichiwo/pycda',
+    url='http://github.com/paichiwo/cda_download',
     author='Lukasz Zerucha',
     author_email='lzerucha@gmail.com',
     description='A library that helps downloading videos from cda.pl',
