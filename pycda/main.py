@@ -22,11 +22,13 @@ class PyCDA:
         self.__soup = self.__get_soup(url)
 
     def __get_soup(self, url: str) -> BeautifulSoup:
+        # Return page source in the form of beautiful soup
         self.__driver.get(url)
         page_src = self.__driver.page_source
         return BeautifulSoup(page_src, 'html.parser') if page_src else None
 
     def thumbnail(self) -> str:
+        # Fetch thumbnail url
         thumbnail_url = self.__soup.find('meta', {'property': 'og:image'}).get('content')
         if thumbnail_url:
             return thumbnail_url
@@ -34,6 +36,7 @@ class PyCDA:
             raise Exception('Thumbnail url could not be fetched')
 
     def title(self) -> str:
+        # Fetch video title
         title = self.__soup.find('meta', {'property': 'og:title'}).get('content')
         if title:
             return title
@@ -41,6 +44,7 @@ class PyCDA:
             raise Exception('Title could not be fetched')
 
     def publish_date(self) -> str:
+        # Fetch video publish date
         date = self.__soup.find('meta', {'itemprop': 'uploadDate'}).get('content')
         if date:
             return format_date_string(date)
@@ -48,6 +52,7 @@ class PyCDA:
             raise Exception('Publish date could not be fetched')
 
     def duration(self) -> str:
+        # Fetch video duration
         duration = self.__soup.find('meta', {'itemprop': 'duration'}).get('content')
         if duration:
             return format_duration(duration)
@@ -55,6 +60,7 @@ class PyCDA:
             raise Exception('Duration could not be fetched')
 
     def filesize(self) -> int:
+        # Fetch video file size
         target = self.__find_best_quality()
         if target:
             request = urllib.request.Request(target, method='HEAD')
@@ -63,7 +69,8 @@ class PyCDA:
         else:
             raise Exception('Filesize could not be fetched')
 
-    def __get_video_src(self, quality: str) -> str:
+    def __get_video_src(self, quality: str):
+        # Fetch video target
         soup = self.__get_soup(self.__url + self.__quality_urls[quality])
         if soup:
             video_tag = soup.find('video', class_='pb-video-player')
@@ -72,6 +79,7 @@ class PyCDA:
         return None
 
     def __find_best_quality(self):
+        # Find the best quality of the available video sources
         for quality in self.__qualities:
             target = self.__get_video_src(quality)
             if target and len(target.split('/')[-1]) > 4:
@@ -79,6 +87,7 @@ class PyCDA:
         return None
 
     def download(self, filename: str = None, on_progress_callback=None):
+        # Download target
         target = self.__find_best_quality()
         if target:
             output_filename = f'{filename if filename else self.title()}.mp4'
@@ -88,4 +97,4 @@ class PyCDA:
             else:
                 print('File already downloaded')
         else:
-            print("No valid video URL found.")
+            print('No valid video URL found.')
