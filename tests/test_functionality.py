@@ -22,6 +22,7 @@ if __name__ == '__main__':
             print(f' | Speed: {download_speed:.2f} KB/s', end='')
             last_update_time = current_time
 
+
     url1 = 'https://www.cda.pl/video/14967539bc'
     url2 = 'https://www.cda.pl/video/192935076e'
     url3 = 'https://www.cda.pl/video/295066274'
@@ -29,9 +30,9 @@ if __name__ == '__main__':
     url5 = 'https://www.cda.pl/video/1252604482'
 
     cda = PyCDA(url4)
-    # cda.download(filename='../downloads/cda_file.mp4', on_progress_callback=report_hook)
-    # cda.title()
-    # cda.thumbnail()
-    # print(cda.publish_date())
-    # print(cda.duration())
+    print(cda.title())
+    print(cda.thumbnail())
+    print(cda.publish_date())
+    print(cda.duration())
     print(cda.filesize())
+    cda.download(filename='../downloads/cda_file.mp4', on_progress_callback=report_hook)
