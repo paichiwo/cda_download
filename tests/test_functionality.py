@@ -35,4 +35,5 @@ if __name__ == '__main__':
     print(cda.publish_date())
     print(cda.duration())
     print(cda.filesize())
+    print(cda.description())
     cda.download(filename='../downloads/cda_file.mp4', on_progress_callback=report_hook)

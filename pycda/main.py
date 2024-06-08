@@ -69,6 +69,14 @@ class PyCDA:
         else:
             raise Exception('Filesize could not be fetched')
 
+    def description(self) -> str:
+        # Fetch video description
+        description = self.__soup.find('meta', {'itemprop': 'description'}).get('content')
+        if description:
+            return description
+        else:
+            raise Exception('Description could not be fetched')
+
     def __get_video_src(self, quality: str):
         # Fetch video target
         soup = self.__get_soup(self.__url + self.__quality_urls[quality])
