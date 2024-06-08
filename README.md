@@ -87,6 +87,9 @@ cda = PyCDA(url=url)
 # video title
 print(cda.title())
 
+# video description
+print(cda.description())
+
 # video publish date
 print(cda.publish_date())
 
