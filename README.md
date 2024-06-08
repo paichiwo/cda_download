@@ -1,5 +1,6 @@
 # CDA_download
 
+![PyPI - Downloads](https://img.shields.io/pypi/dm/cda_download)
 
 
 ### A library that helps download videos from CDA website
