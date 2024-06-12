@@ -8,7 +8,7 @@
 
 
 ### Installation:
-`pip install pycda`
+`pip install cda_download`
 
 ### How to use:
 ```python
@@ -86,6 +86,9 @@ cda = PyCDA(url=url)
 
 # video title
 print(cda.title())
+
+# channel name
+print(cda.channel())
 
 # video description
 print(cda.description())
