@@ -43,6 +43,14 @@ class PyCDA:
         else:
             raise Exception('Title could not be fetched')
 
+    def channel(self) -> str:
+        # Fetch channel name
+        channel = self.__soup.find('span', {'style': 'position:static'}).text
+        if channel:
+            return channel
+        else:
+            raise Exception('Channel name could not be fetched')
+
     def publish_date(self) -> str:
         # Fetch video publish date
         date = self.__soup.find('meta', {'itemprop': 'uploadDate'}).get('content')
