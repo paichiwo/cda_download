@@ -29,8 +29,9 @@ if __name__ == '__main__':
     url4 = 'https://www.cda.pl/video/210880265'
     url5 = 'https://www.cda.pl/video/1252604482'
 
-    cda = PyCDA(url4)
+    cda = PyCDA(url5)
     print(cda.title())
+    print(cda.channel())
     print(cda.thumbnail())
     print(cda.publish_date())
     print(cda.duration())
