@@ -1,5 +1,5 @@
 from datetime import datetime, timedelta
-from pycda.main import PyCDA
+from cda_download import CdaDownload
 
 if __name__ == '__main__':
 
@@ -29,12 +29,12 @@ if __name__ == '__main__':
     url4 = 'https://www.cda.pl/video/210880265'
     url5 = 'https://www.cda.pl/video/1252604482'
 
-    cda = PyCDA(url5)
-    print(cda.title())
+    cda = CdaDownload(url1)
+    # print(cda.title())
     print(cda.channel())
-    print(cda.thumbnail())
-    print(cda.publish_date())
-    print(cda.duration())
-    print(cda.filesize())
-    print(cda.description())
-    cda.download(filename='../downloads/cda_file.mp4', on_progress_callback=report_hook)
+    # print(cda.thumbnail())
+    # print(cda.publish_date())
+    # print(cda.duration())
+    # print(cda.filesize())
+    # print(cda.description())
+    # cda.download(filename='../downloads/cda_file.mp4', on_progress_callback=report_hook)
