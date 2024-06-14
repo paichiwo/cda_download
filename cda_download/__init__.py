@@ -5,4 +5,4 @@ __title__ = "pycda"
 __author__ = "Lukasz Zerucha"
 __license__ = "MIT License"
 
-from pycda.main import PyCDA
+from cda_download.main import CdaDownload
