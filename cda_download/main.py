@@ -2,11 +2,10 @@ import os
 import urllib.request
 from bs4 import BeautifulSoup
 from selenium import webdriver
-from fake_useragent import UserAgent
-from pycda.helpers import format_date_string, format_duration
+from cda_download.helpers import format_date_string, format_duration
 
 
-class PyCDA:
+class CdaDownload:
     """Lightweight CDA wrapper"""
 
     def __init__(self, url: str):
@@ -14,9 +13,10 @@ class PyCDA:
         self.__qualities = ['1080', '720', '480', '360']
         self.__quality_urls = {q: f'/vfilm?wersja={q}p' for q in self.__qualities}
 
+        self.__ua = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:123.0) Gecko/20100101 Firefox/123.0'
         self.__options = webdriver.ChromeOptions()
         self.__options.add_argument('headless')
-        self.__options.add_argument(f'user-agent={UserAgent().random}')
+        self.__options.add_argument(f'user-agent={self.__ua}')
 
         self.__driver = webdriver.Chrome(options=self.__options)
         self.__soup = self.__get_soup(url)
@@ -45,9 +45,9 @@ class PyCDA:
 
     def channel(self) -> str:
         # Fetch channel name
-        channel = self.__soup.find('span', {'style': 'position:static'}).text
+        channel = self.__soup.find('span', class_='color-link-primary', style='position:static')
         if channel:
-            return channel
+            return channel.get_text(strip=True)
         else:
             raise Exception('Channel name could not be fetched')
 
