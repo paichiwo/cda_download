@@ -12,11 +12,11 @@
 
 ### How to use:
 ```python
-from pycda import PyCDA
+from cda_download import CdaDownload
 
 url = "CDA url"
 
-cda = PyCDA(url=url)
+cda = CdaDownload(url=url)
 cda.download()
 ```
 
@@ -30,7 +30,7 @@ and pass as a parameter in the download method.
 
 ```python
 from datetime import datetime, timedelta
-from pycda import PyCDA
+from cda_download import CdaDownload
 
 download_start_time = datetime.now()
 last_update_time = datetime.now()
@@ -54,7 +54,7 @@ def show_progress(count, block_size, total_size):
 
 url = "CDA url"
 
-cda = PyCDA(url=url)
+cda = CdaDownload(url=url)
 cda.download(on_progress_callback=show_progress)
 ```
 
@@ -64,11 +64,11 @@ You can pass filename as a parameter in the form of a string to specify download
 Using download method without the `filename` parameter will save the file to where your script is located.
 
 ```python
-from pycda import PyCDA
+from cda_download import CdaDownload
 
 url = "cda url"
 
-cda = PyCDA(url=url)
+cda = CdaDownload(url=url)
 output_path = "D:/Downloads/title.mp4"
 
 cda.download(filename=output_path)
@@ -79,10 +79,10 @@ cda.download(filename=output_path)
 Apart from downloading, you can access other data about CDA video:
 
 ```python
-from pycda import PyCDA
+from cda_download import CdaDownload
 
 url = "CDA url"
-cda = PyCDA(url=url)
+cda = CdaDownload(url=url)
 
 # video title
 print(cda.title())
