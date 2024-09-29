@@ -15,7 +15,7 @@ class CdaDownload:
 
         self.__ua = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:123.0) Gecko/20100101 Firefox/123.0'
         self.__options = webdriver.ChromeOptions()
-        self.__options.add_argument('headless')
+        self.__options.add_argument('headless=old')
         self.__options.add_argument(f'user-agent={self.__ua}')
 
         self.__driver = webdriver.Chrome(options=self.__options)
@@ -47,7 +47,7 @@ class CdaDownload:
         # Fetch channel name
         channel = self.__soup.find('span', class_='color-link-primary', style='position:static')
         if channel:
-            return channel.get_text(strip=True)
+            return channel.get_text()
         else:
             raise Exception('Channel name could not be fetched')
 
